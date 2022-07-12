@@ -51,7 +51,9 @@ CREATE TABLE medical_histories_treaments (
 
 -- CREATE FK INDEXES
 
-CREATE INDEX medical_histories_patient_index ON medical_histories (patient_id);
-CREATE INDEX invoices_medical_history_index ON invoices (medical_history_id);
-CREATE INDEX invoice_items_id_index ON invoice_items (invoice_id);
-CREATE INDEX invoice_treatment_id_items_index ON invoice_items (treatment_id);
+CREATE INDEX medical_histories_patient_index ON medical_histories (patient_id ASC NULL LAST);
+CREATE INDEX invoices_medical_history_index ON invoices (medical_history_id ASC NULL LAST);
+CREATE INDEX invoice_items_id_index ON invoice_items (invoice_id ASC NULL LAST);
+CREATE INDEX invoice_treatment_id_items_index ON invoice_items (treatment_id ASC NULL LAST);
+CREATE INDEX medical_hist_and_treat_medical_history_index ON medical_histories_treaments (medical_history_id ASC NULL LAST);
+CREATE INDEX medical_hist_and_treat_treatment_index ON medical_histories_treaments (treatment_id ASC NULL LAST);
