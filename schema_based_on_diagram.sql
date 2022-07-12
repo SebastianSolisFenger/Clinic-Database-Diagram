@@ -27,19 +27,25 @@ CREATE TABLE invoices (
     total_amount DECIMAL,
     generated_at TIMESTAMP,
     payed_at TIMESTAMP,
-    medical_history_id INT NOT NULL,
+    medical_history_id integer NOT NULL,
     FOREIGN KEY (medical_history_id) REFERENCES medical_histories (id) ON DELETE RESTRICT ON UPDATE CASCADE
 )
 
 CREATE TABLE invoice_items (
    id SERIAL PRIMARY KEY,
     unit_price DECIMAL,
-    quantity INT,
+    quantity integer,
     total_price DECIMAL,
-    invoice_id INT,
-    treatment_id INT,
+    invoice_id integer,
+    treatment_id integer,
     FOREIGN KEY (invoice_id) REFERENCES invoices (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (treatment_id) REFERENCES treatments (id) ON DELETE RESTRICT ON UPDATE CASCADE
 )
 
+CREATE TABLE medical_histories_treaments (
+    medical_history_id integer NOT NULL,
+    treatment_id integer NOT NULL,
+    FOREIGN KEY (medical_history_id) REFERENCES medical_histories (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (treatment_id) REFERENCES treatments (id) ON DELETE RESTRICT ON UPDATE CASCADE
+)
 
