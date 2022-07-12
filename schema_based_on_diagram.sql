@@ -2,45 +2,44 @@
 CREATE DATABASE Clinic_Database_Diagram
 
 CREATE TABLE patients (
-    id INT GENERATED ALWAYS AS IDENTITY
-    name VARCHAR(100)
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
     date_of_birth DATE
-    PRIMARY KEY (id)
 )
 
 CREATE TABLE medical_histories (
-    id INT GENERATED ALWAYS AS IDENTITY
-    admitted_at TIMESTAMP
-    patient_id INT
-    status VARCHAR(100)
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    admitted_at timestamp,
+    patient_id integer NOT NULL,
+    status VARCHAR(100),
+    FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE RESTRICT ON UPDATE CASCADE
 )
 
 CREATE TABLE treatments (
-    id INT GENERATED ALWAYS AS IDENTITY
-    type VARCHAR(100)
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(100),
     name VARCHAR(100)
-    PRIMARY KEY (id)
 )
 
 
 CREATE TABLE invoices (
-    id INT GENERATED ALWAYS AS IDENTITY
-    total_amount DECIMAL
-    generated_at TIMESTAMP
-    payed_at TIMESTAMP
-    medical_history_id INT
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    total_amount DECIMAL,
+    generated_at TIMESTAMP,
+    payed_at TIMESTAMP,
+    medical_history_id INT NOT NULL,
+    FOREIGN KEY (medical_history_id) REFERENCES medical_histories (id) ON DELETE RESTRICT ON UPDATE CASCADE
 )
 
 CREATE TABLE invoice_items (
-    id INT GENERATED ALWAYS AS IDENTITY
-    unit_price DECIMAL
-    quantity INT
-    total_price DECIMAL
-    invoice_id INT
-    treatment_id INT
-    PRIMARY KEY (id)
+   id SERIAL PRIMARY KEY,
+    unit_price DECIMAL,
+    quantity INT,
+    total_price DECIMAL,
+    invoice_id INT,
+    treatment_id INT,
+    FOREIGN KEY (invoice_id) REFERENCES invoices (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (treatment_id) REFERENCES treatments (id) ON DELETE RESTRICT ON UPDATE CASCADE
 )
 
 
